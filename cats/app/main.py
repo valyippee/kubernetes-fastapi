@@ -9,11 +9,6 @@ from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel, Field
 
 
-class Cats(BaseModel):
-    name: str
-    color: str
-
-
 class CatSchema(BaseModel):
     name: str = Field(...)
     color: str = Field(...)
@@ -27,7 +22,7 @@ class CatSchema(BaseModel):
         }
 
 
-def ResponseModel(data, message):
+def response_model(data, message):
     return {
         "data": [data],
         "code": 200,
@@ -78,21 +73,16 @@ def read_root():
     return {"message": "Welcome to this fantastic app!"}
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
-
-
 @app.get("/cats")
 async def get_all_cats():
     cats = await retrieve_cats()
     if cats:
-        return ResponseModel(cats, "Cats data retrieved successfully")
-    return ResponseModel(cats, "Empty list returned")
+        return response_model(cats, "Cats data retrieved successfully")
+    return response_model(cats, "Empty list returned")
 
 
 @app.post("/cats", response_description="Cat data added into the database")
 async def add_cat_data(cat: CatSchema = Body(...)):
     cat = jsonable_encoder(cat)
     new_cat = await add_cat(cat)
-    return ResponseModel(new_cat, "Student added successfully.")
+    return response_model(new_cat, "Cat added successfully.")

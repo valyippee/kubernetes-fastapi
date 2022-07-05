@@ -6,6 +6,12 @@ services:
       - "80:80"
     depends_on:
       - db
+  dogs-app:
+    build: /dogs
+    ports:
+      - "81:81"
+    depends_on:
+      - db
   mongo-db:
     image: mongo
     ports:
