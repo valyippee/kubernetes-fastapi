@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  cats-app:
+    build: /cats
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+  mongo-db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=password
