@@ -6,6 +6,8 @@ services:
       - "80:80"
     depends_on:
       - db
+    environment:
+      - MONGO_URI=mongodb://user:password@mongo-db:27017/
   dogs-app:
     build: /dogs
     ports:

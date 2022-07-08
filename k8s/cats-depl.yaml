@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cats-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cats
+  template:
+    metadata:
+      labels:
+        app: cats
+    spec:
+      containers:
+        - name: cats
+          image: cats
+          env:
+            - name: MONGO_URI
+              # value: 'mongodb://cats-mongo-srv:27017/cats'
+              # value: 'mongodb://localhost:27017/'
+              value: 'mongodb://cats-mongo-srv.default.svc.cluster.local/'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cats-srv
+spec:
+  selector:
+    app: cats
+  ports:
+    - name: cats
+      protocol: TCP
+      port: 5000
+      targetPort: 5000

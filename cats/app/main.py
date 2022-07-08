@@ -33,9 +33,10 @@ def response_model(data, message):
 ################################
 import motor.motor_asyncio
 from bson.objectid import ObjectId
+import os
 
 
-MONGO_DETAILS = "mongodb://user:password@mongo-db:27017/"
+MONGO_DETAILS = os.environ.get("MONGO_URI")
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
 database = client.cats
 cats_collection = database.get_collection("cats_collection")

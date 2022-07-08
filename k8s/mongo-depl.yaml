@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cats-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cats
+  template:
+    metadata:
+      labels:
+        app: cats
+    spec:
+      containers:
+        - name: cats-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cats-mongo-srv
+spec:
+  selector:
+    app: cats
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
