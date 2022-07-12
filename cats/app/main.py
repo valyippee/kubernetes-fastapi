@@ -89,7 +89,7 @@ async def add_cat_data(cat: CatSchema = Body(...)):
     return response_model(new_cat, "Cat added successfully.")
 
 
-@app.get("/addcat", response_description="Default Cat data added into the database")
+@app.post("/addcat", response_description="Default Cat data added into the database")
 async def add_default_cat_data():
     cat = jsonable_encoder({'name': 'Teddy', 'color': 'brown'})
     new_cat = await add_cat(cat)
