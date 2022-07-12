@@ -3,7 +3,7 @@ services:
   cats-app:
     build: /cats
     ports:
-      - "80:80"
+      - "5000:5000"
     depends_on:
       - db
     environment:
@@ -11,7 +11,7 @@ services:
   dogs-app:
     build: /dogs
     ports:
-      - "81:81"
+      - "6000:6000"
     depends_on:
       - db
   mongo-db:

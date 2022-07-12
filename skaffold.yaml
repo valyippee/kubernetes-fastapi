@@ -8,6 +8,10 @@ build:
       context: cats
       docker:
         dockerfile: Dockerfile
+    - image: dogs
+      context: dogs
+      docker:
+        dockerfile: Dockerfile
 deploy:
   kubectl:
     manifests:

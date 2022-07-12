@@ -3,16 +3,24 @@ kind: Ingress
 metadata:
   name: ingress-service
   annotations:
-    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
   - http:
       paths:
-        - path: /
+        - path: /api1(/|$)(.*)
           pathType: Prefix
           backend:
             service:
               name: cats-srv
               port: 
                 number: 5000
+        - path: /api2(/|$)(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: dogs-srv
+              port: 
+                number: 6000
   ingressClassName: nginx
